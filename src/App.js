@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import { useState } from 'react/cjs/react.production.min';
 import './App.css';
+
+function Dashboard() {
+  const [observation, setObservation] = useState({
+    location:'',
+    temperature:'',
+    wind:'',
+    humidity:'',
+  });
+  const [weatherType, setWeatherType] = useState({
+    description:'',
+    type:'',
+  });
+
+  const [forecast, setForecast] = useState([]);
+
+  return (
+    <div className="dashboard">
+      <button className="button"></button>
+      <div className="weatherObservation">
+        <Nowcasting />
+        <WeatherIcon />
+        <Forecast />
+      </div>
+    </div>
+  );
+}
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Dashboard/>
     </div>
   );
 }
