@@ -46,6 +46,10 @@ html, body {
   font-size: 20px;
   line-height: 60px;
 }
+.description {
+  font-size: 20px;
+  color: rgb(131, 131, 131);
+}
 .windSpeed, .humidity {
   display: flex;
   align-items: center;
