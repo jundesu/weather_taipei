@@ -2,6 +2,16 @@ import { useState } from 'react';
 import './App.css';
 import windSpeed from './img/weather_wind.png';
 import humidity from './img/weather_humidity.png';
+import sunny from './img/wd_sunny.png';
+import sunnyNight from './img/wn_sunny.png';
+import cloudy from './img/wd_cloudy.png';
+import cloudyNight from './img/wn_cloudy.png';
+import afternoonTs from './img/wd_afternoon_ts.png';
+import afternoonTsNight from './img/wn_afternoon_ts.png';
+import rain from './img/w_rain.png';
+import fog from './img/wd_fog.png';
+import fogNight from './img/wn_fog.png';
+import snow from './img/w_snow.png';
 
 const locationName = '臺北'
 
@@ -68,13 +78,11 @@ function Dashboard() {
     windSpeed:'',
     humidity:'',
   });
-
   const [weatherType, setWeatherType] = useState({
     description: '',
     type: '',
   });
-
-  const [isDay, setIsDay] = useState(true);
+  const [dayOrNight, setDayOrNight] = useState(true);
 
   const handleClick = () => {
     Promise.all([
@@ -82,7 +90,7 @@ function Dashboard() {
     ]).then(([currentObservation, currentWeatherType, sunriseSunset]) =>{
         setObservation(currentObservation);
         setWeatherType(currentWeatherType);
-        setIsDay(sunriseSunset);
+        setDayOrNight(sunriseSunset);
       });
   }
 
@@ -91,7 +99,7 @@ function Dashboard() {
       <button className="button" onClick={handleClick}></button>
       <div className="weatherObservation">
         <Nowcasting observation={observation} weatherType={weatherType} />
-        <WeatherIcon weatherType={weatherType} />
+        <WeatherIcon weatherType={weatherType} dayOrNight={dayOrNight}/>
         {/* <Forecast /> */}
       </div>
     </div>
@@ -116,10 +124,10 @@ function Nowcasting(props) {
   );
 }
 
-function WeatherIcon() {
+function WeatherIcon(props) {
   return (
     <div>
-      <img src="" className="weatherIcon"/>
+      <img src={handleWeatherIcon(props.dayOrNight, Number(props.weatherType.type || 0))} className="weatherIcon"/>
     </div>
   );
 }
@@ -144,6 +152,52 @@ function isDay(now, sunrise, sunset) {
   return sunrise.getTime() <= now.getTime() && now.getTime() <= sunset.getTime() 
 }
 
+function handleWeatherIcon(isDay, code){
+  const dayImage = {
+    sunny: sunny,
+    cloudy: cloudy,
+    afternoonTs: afternoonTs,
+    rain: rain,
+    fog: fog,
+    snowing: snow,
+  };
+  const nightImage = {
+    sunny: sunnyNight,
+    cloudy: cloudyNight,
+    afternoonTs: afternoonTsNight,
+    rain: rain,
+    fog: fogNight,
+    snowing: snow,
+  };
+  const weatherCode = {
+    sunnyCode: [0, 1],
+    cloudyCode: [2, 3, 4, 5, 6, 7],
+    afternoonTsCode: [11, 15, 16, 18, 19, 21, 30, 34],
+    rainCode: [8, 9, 10, 12, 13, 14, 17, 20, 22, 29, 31, 32, 33, 35, 36, 38, 39, 41],
+    fogCode: [24, 25, 26, 27, 28],
+    snowingCode: [23, 37, 42],
+  };
+  const dayOrNightIcon = isDay? dayImage : nightImage;
+
+  if(weatherCode.sunnyCode.find(e => e === code) !== undefined) {
+    return dayOrNightIcon.sunny
+  }
+  if(weatherCode.cloudyCode.find(e => e === code) !== undefined) {
+    return dayOrNightIcon.cloudy
+  }
+  if(weatherCode.afternoonTsCode.find(e => e === code) !== undefined) {
+    return dayOrNightIcon.afternoonTs
+  }
+  if(weatherCode.rainCode.find(e => e === code) !== undefined) {
+    return dayOrNightIcon.rain
+  }
+  if(weatherCode.fogCode.find(e => e === code) !== undefined) {
+    return dayOrNightIcon.fog
+  }
+  if(weatherCode.snowingCode.find(e => e === code) !== undefined) {
+    return dayOrNightIcon.snowing
+  }
+}
 
 
 function App() {
