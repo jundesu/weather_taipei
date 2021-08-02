@@ -71,6 +71,39 @@ function fetchSunriseSunset() {
   });
 }
 
+function fetchWeeklyForecast() {
+  return fetch(`https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-063?Authorization=${process.env.REACT_APP_CWB_API_KEY}&format=JSON`).then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    const locationsTp = data.records?.locations?.find(e => e.locationsName === '臺北市');
+    const locationNg = locationsTp?.location?.find(e => e.locationName === '南港區');
+    const fcData = locationNg?.weatherElement?.find(e => e.elementName === 'T');
+    const fcWeatherType = locationNg?.weatherElement?.find(e => e.elementName === 'Wx');
+
+    const now = new Date();
+    const todayString = yearMonthDayString(now);
+    const newForecast = [];
+    const sevenDays = {};
+    
+   fcData.time.filter(e => !e.startTime.startsWith(todayString)).forEach((e, index) => {
+      const fcStartTime = e.startTime.split(' ')[0];
+      const fcDate = fcStartTime.substring(5);
+      const fcNormalizedDate = fcDate.replace('-', '/');
+      const fcTemp = e.elementValue[0].value;
+      if(!sevenDays[fcNormalizedDate]) {
+        sevenDays[fcNormalizedDate] = true;
+        newForecast.push({
+          date:fcNormalizedDate,
+          temp:fcTemp,
+          type:fcWeatherType.time[index].elementValue[1].value,
+        });
+      }
+    });
+    return newForecast
+  });
+}
+
 function Dashboard() {
   const [observation, setObservation] = useState({
     location:'',
@@ -83,14 +116,16 @@ function Dashboard() {
     type: '',
   });
   const [dayOrNight, setDayOrNight] = useState(true);
+  const [forecast, setForecast] = useState([]);
 
   const handleClick = () => {
     Promise.all([
-      fetchCurrentObservation(),fetchCurrentWeatherType(),fetchSunriseSunset()
-    ]).then(([currentObservation, currentWeatherType, sunriseSunset]) =>{
+      fetchCurrentObservation(), fetchCurrentWeatherType(), fetchSunriseSunset(), fetchWeeklyForecast()
+    ]).then(([currentObservation, currentWeatherType, sunriseSunset, weeklyForecast]) =>{
         setObservation(currentObservation);
         setWeatherType(currentWeatherType);
         setDayOrNight(sunriseSunset);
+        setForecast(weeklyForecast);
       });
   }
 
@@ -100,7 +135,7 @@ function Dashboard() {
       <div className="weatherObservation">
         <Nowcasting observation={observation} weatherType={weatherType} />
         <WeatherIcon weatherType={weatherType} dayOrNight={dayOrNight}/>
-        {/* <Forecast /> */}
+        <Forecast forecast={forecast} dayOrNight={dayOrNight}/>
       </div>
     </div>
   );
@@ -128,6 +163,24 @@ function WeatherIcon(props) {
   return (
     <div>
       <img src={handleWeatherIcon(props.dayOrNight, Number(props.weatherType.type || 0))} className="weatherIcon"/>
+    </div>
+  );
+}
+
+function Forecast(props) {
+  return (
+    <div>
+      {props.forecast.map(({date, temp, type}) => {
+        return(
+          <div className="day" key={date}>
+            <div className="date">{date || 0 }</div>
+            <div className="fcTemp">{temp || 0} <span>&#8451;</span></div>
+            <div>
+              <img className="fcIcon" src={handleWeatherIcon(props.dayOrNight, Number(type || 0))}/>
+            </div>
+          </div>
+        )
+      })}
     </div>
   );
 }
