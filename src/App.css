@@ -2,6 +2,7 @@ html, body {
   height: 100vh;
   box-sizing: border-box;
   background: linear-gradient(rgb(170, 216, 243), rgb(210, 189, 245));
+  background-attachment: fixed;
 }
 .dashboard {
   display: flex;
@@ -12,6 +13,10 @@ html, body {
   background-color: rgb(255, 255, 255, 0.384);
   width: 600px;
   height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 .button {
   width: 40px;
@@ -26,7 +31,6 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border: 1px solid ;
 }
 .location {
   font-size: 30px;
@@ -62,4 +66,48 @@ html, body {
   max-width: 25px;
   max-height: 25px;
   margin-right: 5%;
+}
+.weatherIcon {
+  max-width: 200px;
+  max-height: 200px;
+}
+.forecast {
+  width: 500px;
+  height: 160px;
+  color: rgb(131, 131, 131);
+  display: flex;
+  justify-content: space-between;
+  overflow-x: auto;
+}
+.forecast::-webkit-scrollbar {
+  display: none;
+}
+.day {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 20px;
+  border: 1px solid;
+  border-color: transparent #ffffff transparent transparent;
+  width: 100px;
+  height: 150px;
+  padding: 0 1% 0 0;
+}
+.date {
+  font-weight: 500;
+}
+.fcTemp {
+  height: 25px;
+  line-height: 25px;
+  display: flex;
+}
+.fcTemp > span {
+  font-size: 12px;
+  line-height: 20px;
+}
+.fcIcon {
+  max-width: 70px;
+  max-height: 70px;
 }
