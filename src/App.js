@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import windSpeed from './img/weather_wind.png';
 import humidity from './img/weather_humidity.png';
@@ -86,17 +86,17 @@ function fetchWeeklyForecast() {
     const newForecast = [];
     const sevenDays = {};
     
-   fcData.time.filter(e => !e.startTime.startsWith(todayString)).forEach((e, index) => {
-      const fcStartTime = e.startTime.split(' ')[0];
+   fcData.time.filter(e => !e.startTime?.startsWith(todayString)).forEach((e, index) => {
+      const fcStartTime = e?.startTime?.split(' ')[0];
       const fcDate = fcStartTime.substring(5);
       const fcNormalizedDate = fcDate.replace('-', '/');
-      const fcTemp = e.elementValue[0].value;
+      const fcTemp = e?.elementValue?.[0].value;
       if(!sevenDays[fcNormalizedDate]) {
         sevenDays[fcNormalizedDate] = true;
         newForecast.push({
           date:fcNormalizedDate,
           temp:fcTemp,
-          type:fcWeatherType.time[index].elementValue[1].value,
+          type:fcWeatherType?.time?.[index].elementValue?.[1].value,
         });
       }
     });
@@ -128,6 +128,10 @@ function Dashboard() {
         setForecast(weeklyForecast);
       });
   }
+
+  useEffect(() => {
+    handleClick();
+  }, []);
 
   return (
     <div className="dashboard">
@@ -169,7 +173,7 @@ function WeatherIcon(props) {
 
 function Forecast(props) {
   return (
-    <div>
+    <div className="forecast">
       {props.forecast.map(({date, temp, type}) => {
         return(
           <div className="day" key={date}>
