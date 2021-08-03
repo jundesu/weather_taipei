@@ -153,11 +153,11 @@ function Nowcasting(props) {
       <div className="description">{props.weatherType.description || ''}</div>
       <div className="windSpeed">
         <img src={windSpeed}/>
-        <span>{props.observation.windSpeed} m/s</span>
+        <span>{props.observation.windSpeed + 'm/s'}</span>
       </div>
       <div className="humidity">
         <img src={humidity}/>
-        <span>{Math.round((props.observation.humidity || 0)*100)} &#37;</span>
+        <span>{Math.round((props.observation.humidity || 0)*100) + '%'}</span>
         </div>
     </div>
   );

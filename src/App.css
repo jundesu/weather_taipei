@@ -1,6 +1,10 @@
-html, body {
-  height: 100vh;
+* {
   box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
   background: linear-gradient(rgb(170, 216, 243), rgb(210, 189, 245));
   background-attachment: fixed;
 }
@@ -69,7 +73,7 @@ html, body {
 }
 .windSpeed, .humidity {
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
 }
 .windSpeed > span, .humidity > span {
   font-size: 20px;
@@ -110,6 +114,7 @@ html, body {
 }
 .date {
   font-weight: 500;
+  letter-spacing: 2px;
 }
 .fcTemp {
   height: 25px;
@@ -123,4 +128,71 @@ html, body {
 .fcIcon {
   max-width: 70px;
   max-height: 70px;
+}
+
+@media(max-width:700px) {
+  .button {
+    width: 30px;
+    height: 30px;
+  }
+  .button::after {
+    transform: scale(0.5);
+    bottom: -20px;
+    right: -17px;
+  }
+  .weatherObservation {
+    width: 300px;
+    height: 500px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+  }
+  .weatherInfo {
+    height: 200px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .temperature {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 50px;
+  }
+  .temperature > span {
+    font-size: 15px;
+    line-height: 30px; 
+  }
+  .description {
+    font-size: 15px;
+  }
+  .windSpeed > span, .humidity > span{
+    font-size: 15px;
+  }
+  .windSpeed > img, .humidity > img {
+    max-width: 20px;
+    max-height: 20px;
+  }
+  .weatherIcon {
+    max-width: 90px;
+    max-height: 90px;
+  }
+  .forecast {
+    width: 300px;
+    height: 150px;
+  }
+  .day {
+    width: 80px;
+    height: 130px;
+    font-size: 15px;
+  }
+  .date {
+    font-weight: 400;
+  }
+  .fcTemp > span {
+    font-size: 10px;
+  }
+  .fcIcon {
+    width: 50px;
+    height: 50px;
+  }
 }
