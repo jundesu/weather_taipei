@@ -8,6 +8,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
 }
 .weatherObservation {
   background-color: rgb(255, 255, 255, 0.384);
@@ -24,6 +25,18 @@ html, body {
   border: none;
   border-radius: 50%;
   margin: 2% 0 1% 0;
+  position: relative;
+}
+.button::after {
+  content: url(./img/icon_fresh.png);
+  position: absolute;
+  transform: scale(0.7);
+  bottom: -15px;
+  right: -12px;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: rgba(211, 211, 211, 0.788);
 }
 .weatherInfo {
   width: 300px;
