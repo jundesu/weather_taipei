@@ -5,6 +5,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100vh;
+  width: 100vw;
   background: linear-gradient(rgb(170, 216, 243), rgb(210, 189, 245));
   background-attachment: fixed;
 }
@@ -12,6 +13,7 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   height: 100%;
 }
 .weatherObservation {
@@ -28,7 +30,8 @@ html, body {
   height: 40px;
   border: none;
   border-radius: 50%;
-  margin: 2% 0 1% 0;
+  background-color: rgba(255, 255, 255, 0.788);
+  margin: 20px;
   position: relative;
 }
 .button::after {
@@ -94,6 +97,7 @@ html, body {
   color: rgb(131, 131, 131);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   overflow-x: auto;
 }
 .forecast::-webkit-scrollbar {
@@ -177,7 +181,7 @@ html, body {
     max-height: 90px;
   }
   .forecast {
-    width: 300px;
+    width: 270px;
     height: 150px;
   }
   .day {
