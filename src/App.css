@@ -1,7 +1,8 @@
 * {
   box-sizing: border-box;
 }
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -74,15 +75,18 @@ html, body {
   font-size: 20px;
   color: rgb(131, 131, 131);
 }
-.windSpeed, .humidity {
+.windSpeed,
+.humidity {
   display: flex;
   justify-content: flex-start;
 }
-.windSpeed > span, .humidity > span {
+.windSpeed > span,
+.humidity > span {
   font-size: 20px;
-  color: rgb(131, 131, 131); 
+  color: rgb(131, 131, 131);
 }
-.windSpeed > img, .humidity > img {
+.windSpeed > img,
+.humidity > img {
   max-width: 25px;
   max-height: 25px;
   margin-right: 5%;
@@ -134,7 +138,7 @@ html, body {
   max-height: 70px;
 }
 
-@media(max-width:700px) {
+@media (max-width: 700px) {
   .button {
     width: 30px;
     height: 30px;
@@ -164,15 +168,17 @@ html, body {
   }
   .temperature > span {
     font-size: 15px;
-    line-height: 30px; 
+    line-height: 30px;
   }
   .description {
     font-size: 15px;
   }
-  .windSpeed > span, .humidity > span{
+  .windSpeed > span,
+  .humidity > span {
     font-size: 15px;
   }
-  .windSpeed > img, .humidity > img {
+  .windSpeed > img,
+  .humidity > img {
     max-width: 20px;
     max-height: 20px;
   }
