@@ -1,5 +1,6 @@
 {
   "name": "weather_taipei",
+  "homepage": "https://jundesu.github.io/weather_taipei",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
