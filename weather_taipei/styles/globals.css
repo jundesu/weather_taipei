@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-weight: 200;
+  color: rgb(131, 131, 131);
+}
+html,
+body {
+  margin: 0;
+  padding: 10px 0 10px 0;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(rgb(170, 216, 243), rgb(210, 189, 245));
+  background-attachment: fixed;
+}
+
