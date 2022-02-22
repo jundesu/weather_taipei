@@ -1,0 +1,49 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.refreshBtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.788);
+  margin-bottom: 10px;
+  padding: 0;
+}
+.refreshBtn:hover {
+  cursor: pointer;
+  background-color: rgba(145, 126, 126, 0.788);
+}
+.weatherObservation {
+  width: 600px;
+  height: 600px;
+  background-color: rgba(255, 255, 255, 0.274);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.weatherIcon {
+  width: 200px;
+  height: 200px;
+}
+
+@media (max-width: 700px){
+  .refreshBtn{
+    width: 30px;
+    height: 30px;
+  }
+  .weatherObservation {
+    width: 300px;
+    height: 550px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+  }
+  .weatherIcon {
+    width: 95px;
+    height: 95px;
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/api/observation": "pages/api/observation.js",
+  "/api/weatherType": "pages/api/weatherType.js",
+  "/api/weeklyForecast": "pages/api/weeklyForecast.js",
+  "/api/sunriseSunset": "pages/api/sunriseSunset.js"
+}
