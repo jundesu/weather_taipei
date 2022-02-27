@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import {handleWeatherIcon} from './Dashboard';
 
-function WeatherIcon(props) {
+function WeatherIcon({weatherType, isDay}) {
   return (
     <Image
         alt="weatherIcon"
         src={handleWeatherIcon(
-          props.dayOrNight,
-          Number(props.weatherType || 0)
+          isDay,
+          Number(weatherType || 0)
         )}
     />
   );

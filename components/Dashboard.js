@@ -70,11 +70,10 @@ function fetchCurrentWeatherType() {
     });
 }
 
+const mockedNow = new Date(2022, 1, 12, 8, 30, 0); 
+const mockedNowString = toServerDateFormat(mockedNow);
+
 function fetchSunriseSunset() {
-  const now = new Date();
-  const nowString = yearMonthDayString(now);
-  const tomorrow = addDays(now, 1);
-  const tomorrowString = yearMonthDayString(tomorrow);
 
   return fetch(
     `/api/sunriseSunset`
@@ -87,7 +86,7 @@ function fetchSunriseSunset() {
         (e) => e.locationName === '臺北市'
       );
       const today = sunriseSunsetData?.time?.find(
-        (e) => e.dataTime === nowString
+        (e) => e.dataTime === mockedNowString
       );
       const sunrise = today?.parameter?.find(
         (e) => e.parameterName === '日出時刻'
@@ -97,9 +96,9 @@ function fetchSunriseSunset() {
         (e) => e.parameterName === '日沒時刻'
       );
       const sunsetTime = sunset?.parameterValue;
-      const sunriseDateAndTime = new Date(`${nowString}T${sunriseTime}+08:00`);
-      const sunsetDateAndTime = new Date(`${nowString}T${sunsetTime}+08:00`);
-      return isDay(now, sunriseDateAndTime, sunsetDateAndTime);
+      const sunriseDateAndTime = new Date(`${mockedNowString}T${sunriseTime}+08:00`);
+      const sunsetDateAndTime = new Date(`${mockedNowString}T${sunsetTime}+08:00`);
+      return checkDayOrNight(mockedNow, sunriseDateAndTime, sunsetDateAndTime);
     });
 }
 
@@ -111,41 +110,46 @@ function fetchWeeklyForecast() {
       return response.json();
     })
     .then((data) => {
-      const locationsTp = data.records?.locations?.find(
+      const city = data.records?.locations?.find(
         (e) => e.locationsName === '臺北市'
       );
-      const locationNg = locationsTp?.location?.find(
+      const district = city?.location?.find(
         (e) => e.locationName === '南港區'
       );
-      const fcData = locationNg?.weatherElement?.find(
+      const weatherElementTemperature = district?.weatherElement?.find(
         (e) => e.elementName === 'T'
       );
-      const fcWeatherType = locationNg?.weatherElement?.find(
+      const weatherElementType = district?.weatherElement?.find(
         (e) => e.elementName === 'Wx'
       );
 
-      const now = new Date();
-      const todayString = yearMonthDayString(now);
-      const newForecast = [];
-      const sevenDays = {};
+      const nextSevenDays = [];
+      const existingDate = {};
 
-      fcData.time
-        .filter((e) => !e.startTime?.startsWith(todayString))
+      weatherElementTemperature.time
+        .filter((e) => !e.startTime?.startsWith(mockedNowString))
         .forEach((e, index) => {
-          const fcStartTime = e?.startTime?.split(' ')[0];
-          const fcDate = fcStartTime.substring(5);
-          const fcNormalizedDate = fcDate.replace('-', '/');
-          const fcTemp = e?.elementValue?.[0].value;
-          if (!sevenDays[fcNormalizedDate]) {
-            sevenDays[fcNormalizedDate] = true;
-            newForecast.push({
-              date: fcNormalizedDate,
-              temp: fcTemp,
-              type: fcWeatherType?.time?.[index].elementValue?.[1].value,
+          const startTime = e?.startTime?.split(' ');
+          //  ['2022-02-13', '06:00:00']
+          const extractedDate = startTime[0]; 
+          // '2022-02-13'
+          const extractedMMDD = extractedDate.substring(5);
+          // '02-13'
+          const normalizedMMDD = extractedMMDD.replace('-', '/');
+          // '02/13'
+
+          const temperature = e?.elementValue?.[0].value;
+
+          if (!existingDate[normalizedMMDD]) {
+            existingDate[normalizedMMDD] = true;
+            nextSevenDays.push({
+              date: normalizedMMDD,
+              temperature: temperature,
+              type: weatherElementType?.time?.[index].elementValue?.[1].value,
             });
           }
         });
-      return newForecast;
+      return nextSevenDays;
     });
 }
 
@@ -162,8 +166,7 @@ function Dashboard() {
     type: '',
   });
 
-  const [dayOrNight, setDayOrNight] = useState(true);
-
+  const [isDay, setIsDay] = useState(true);
   const [forecast, setForecast] = useState([]);
 
   const handleClick = () => {
@@ -181,7 +184,7 @@ function Dashboard() {
       ]) => {
         setObservation(currentObservation);
         setWeatherType(currentWeatherType);
-        setDayOrNight(sunriseSunset);
+        setIsDay(sunriseSunset);
         setForecast(weeklyForecast);
       }
     );
@@ -200,16 +203,16 @@ function Dashboard() {
         <Nowcasting observation={observation} weatherDescription={weatherType.description} />
         
         <div className={styles.weatherIcon}>
-          <WeatherIcon weatherType={weatherType.type} dayOrNight={dayOrNight} />
+          <WeatherIcon weatherType={weatherType.type} isDay={isDay} />
         </div>
         
-        <WeeklyForecast forecast={forecast} dayOrNight={dayOrNight} />
+        <WeeklyForecast forecast={forecast} isDay={isDay} />
       </div>
     </div>
   );
 }
 
-function yearMonthDayString(d) {
+function toServerDateFormat(d) {
   return Intl.DateTimeFormat('zh-TW', {
     year: 'numeric',
     month: '2-digit',
@@ -219,15 +222,9 @@ function yearMonthDayString(d) {
     .replace(/\//g, '-');
 }
 
-function addDays(date, days) {
-  let newDate = new Date(date);
-  newDate.setDate(newDate.getDate() + days);
-  return newDate;
-}
-
-function isDay(now, sunrise, sunset) {
+function checkDayOrNight(mockedNow, sunriseDateAndTime, sunsetDateAndTime) {
   return (
-    sunrise.getTime() <= now.getTime() && now.getTime() <= sunset.getTime()
+    sunriseDateAndTime.getTime() <= mockedNow.getTime() && mockedNow.getTime() <= sunsetDateAndTime.getTime()
   );
 }
 

@@ -1,18 +1,18 @@
 import styles from '../styles/weeklyForecast.module.css';
 import WeatherIcon from './WeatherIcon';
 
-function WeeklyForecast(props) {
+function WeeklyForecast({forecast, isDay}) {
   return (
     <div className={styles.forecast}>
-      {props.forecast.map(({ date, temp, type }) => {
+      {forecast.map(({ date, temperature, type }) => {
         return (
           <div className={styles.day} key={date}>
             <div className={styles.date}>{date || 0}</div>
             <div className={styles.fcTemp}>
-              {temp || 0} <span>&#8451;</span>
+              {temperature || 0} <span>&#8451;</span>
             </div>
             <div className={styles.weatherIcon}>
-              <WeatherIcon weatherType={type} dayOrNight={props.dayOrNight}/>
+              <WeatherIcon weatherType={type} isDay={isDay}/>
             </div>
           </div>
         );
