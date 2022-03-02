@@ -1,0 +1,4 @@
+
+export default function handler(req, res) {
+  res.status(200).json({"success":"true","result":{"resource_id":"A-B0062-001","fields":[{"id":"locationName","type":"String"},{"id":"parameterName","type":"String"},{"id":"parameterValue","type":"String"},{"id":"dataTime","type":"Date"}]},"records":{"dataid":"A-B0062-001","note":"全臺各縣市每天的日出、日沒及太陽過中天等時刻資料-含有日出日沒時之方位及過中天時之仰角資料","locations":{"location":[{"locationName":"臺北市","time":[{"dataTime":"2022-02-12","parameter":[{"parameterName":"民用曙光始","parameterValue":"06:07"},{"parameterName":"日出時刻","parameterValue":"06:31"},{"parameterName":"方位","parameterValue":"105"},{"parameterName":"過中天","parameterValue":"12:08"},{"parameterName":"仰角","parameterValue":"51S"},{"parameterName":"日沒時刻","parameterValue":"17:46"},{"parameterName":"方位","parameterValue":"255"},{"parameterName":"民用暮光終","parameterValue":"18:09"}]}]}]}}})
+}
