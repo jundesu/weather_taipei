@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from '../styles/dashboard.module.css';
 
-import Nowcasting from './Nowcasting';
+import CurrentWeather from './CurrentWeather';
 import WeatherIcon from './WeatherIcon';
 import WeeklyForecast from './WeeklyForecast';
 
@@ -200,7 +200,7 @@ function Dashboard() {
         <Image src={refreshIcon} />
       </button>
       <div className={styles.weatherObservation}>
-        <Nowcasting observation={observation} weatherDescription={weatherType.description} />
+        <CurrentWeather observation={observation} weatherDescription={weatherType.description} />
         
         <div className={styles.weatherIcon}>
           <WeatherIcon weatherType={weatherType.type} isDay={isDay} />

@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import styles from '../styles/nowcasting.module.css';
+import styles from '../styles/currentWeather.module.css';
 
 import windSpeed from '../public/img/weather_wind.png';
 import humidity from '../public/img/weather_humidity.png';
 
-function Nowcasting({observation, weatherDescription}) {
+function CurrentWeather({observation, weatherDescription}) {
   return (
     <div className={styles.weatherInfo}>
       <div className={styles.location}>{observation.location || ''}</div>
@@ -25,4 +25,4 @@ function Nowcasting({observation, weatherDescription}) {
   );
 }
 
-export default Nowcasting;
+export default CurrentWeather;
