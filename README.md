@@ -1,34 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Weather Taipei
+This is a website to display Taipei weather that is built with React.js.
+
+Demo site: 
 
 ## Getting Started
+In order to create a fake API easily, I create this project by [Next.js](https://nextjs.org/docs/getting-started) and put some fake API under pages/api/*.
+All json responses are copied from real Central Weather Bureau APIs.
 
-First, run the development server:
-
-```bash
+Install and run: 
+```
+npm install
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
+1. Responsive on mobile, tablet and desktop. 
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+2. Night weather images are displayed when sunset starts.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Components
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Dashboard
+The data will be reloaded by clicking the refresh button.
 
-## Learn More
+*(attached images)*
 
-To learn more about Next.js, take a look at the following resources:
+### Current Weather
+Display location(臺北), weather description, wind speed and humidity from API `pages/api/observation.js`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Weather Icon
+- Display current weather from API `pages/api/weatherType.js`
+- Get sunset data from API `pages/api/sunriseSunset.js` to shift night weather icons. The current date time is hardcoded to 2022/02/12 08:30 am for demonstration purpose.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Weekly Forecast
+- Display 7-day weather forecasts from API `pages/api/weeklyFroecast.js`.
+- On mobile view, it can be scrolled  horizontally to check the forecasts.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
