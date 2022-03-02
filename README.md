@@ -23,7 +23,15 @@ npm run dev
 ### Dashboard
 The data will be reloaded by clicking the refresh button.
 
-*(attached images)*
+![dashboard](https://user-images.githubusercontent.com/87522693/156311234-17ac3e7b-b403-4682-8e24-c1488513cae2.png)
+
+- Mobile view
+
+![mobile_view](https://user-images.githubusercontent.com/87522693/156311348-f3dd2419-8707-4d30-9d75-88702bb354a4.png)
+
+- Night weather icons after sunset.
+
+![night](https://user-images.githubusercontent.com/87522693/156311532-0eecd319-a3e1-4743-8927-0cb4ae2072cc.png)
 
 ### Current Weather
 Display location(臺北), weather description, wind speed and humidity from API `pages/api/observation.js`.
