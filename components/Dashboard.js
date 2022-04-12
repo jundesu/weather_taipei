@@ -168,8 +168,10 @@ function Dashboard() {
 
   const [isDay, setIsDay] = useState(true);
   const [forecast, setForecast] = useState([]);
+  const [loadingStatus, setLoadingStatus] = useState(false);
 
   const handleClick = () => {
+    setLoadingStatus(true);
     Promise.all([
       fetchCurrentObservation(),
       fetchCurrentWeatherType(),
@@ -186,9 +188,15 @@ function Dashboard() {
         setWeatherType(currentWeatherType);
         setIsDay(sunriseSunset);
         setForecast(weeklyForecast);
+        setLoadingStatus(false);
       }
-    );
+    ).catch(() => {
+      setLoadingStatus(false);
+    })
+    
   };
+
+  const loadingAnimation = loadingStatus ? styles.loading : styles.pauseLoading
 
   useEffect(() => {
     handleClick();
@@ -196,7 +204,7 @@ function Dashboard() {
 
   return (
     <div className={styles.dashboard}>
-      <button className={styles.refreshBtn} onClick={handleClick}>
+      <button className={`${styles.refreshBtn} ${loadingAnimation}`} onClick={handleClick}>
         <Image src={refreshIcon} />
       </button>
       <div className={styles.weatherObservation}>
