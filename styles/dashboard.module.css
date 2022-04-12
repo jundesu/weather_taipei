@@ -11,11 +11,27 @@
   background-color: rgba(255, 255, 255, 0.788);
   margin-bottom: 10px;
   padding: 0;
-}
-.refreshBtn:hover {
   cursor: pointer;
-  background-color: rgba(145, 126, 126, 0.788);
+
+  animation-name: rotateButton;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
+
+.loading{
+  animation-play-state: running;
+}
+.pauseLoading{
+  animation-play-state: paused;
+}
+
+@keyframes rotateButton{
+  0%{transform: rotate(0deg);}
+  100%{transform: rotate(720deg);}
+}
+
+
 .weatherObservation {
   width: 600px;
   height: 600px;
